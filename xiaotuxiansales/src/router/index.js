@@ -33,7 +33,15 @@ const router = createRouter({
     path:'/login',
     component:Login
    },
-  ]
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    // return 期望滚动到哪个的位置
+    // 返回 y = 0，代表滚动条在最上方
+    return {
+      top:0
+    }
+  }
+
 })
 
 export default router
