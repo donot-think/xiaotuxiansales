@@ -1,0 +1,11 @@
+// 在jsconfig.json中写以下代码
+{
+    "compilerOptions":{
+    "baseUrl":"./",
+        "paths":{
+            "@/*":[
+                "src/*"
+        ]
+        }
+    }
+}
