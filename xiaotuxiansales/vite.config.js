@@ -34,9 +34,15 @@ export default defineConfig({
         additionalData:`
         @use "@/styles/element/index.scss" as *;
         @use "@/styles/var.scss" as *;
-
         `,
       }
     }
-  }
+  },
+  server: {
+    hmr: true,
+    //vue3 vite配置热更新不用手动刷新
+    // Listening on all local IPs
+    host: true,
+  },
+
 })
