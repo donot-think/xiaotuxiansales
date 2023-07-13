@@ -2,14 +2,22 @@
 import { useMouseInElement } from "@vueuse/core"
 import { ref,watch } from "vue"
 
+
+// 适配图片列表
+defineProps({
+  imageList:{
+    type:Array,
+    default:()=>[]
+   }
+})
 // 图片列表
-const imageList = [
-  "https://yanxuan-item.nosdn.127.net/d917c92e663c5ed0bb577c7ded73e4ec.png",
-  "https://yanxuan-item.nosdn.127.net/e801b9572f0b0c02a52952b01adab967.jpg",
-  "https://yanxuan-item.nosdn.127.net/b52c447ad472d51adbdde1a83f550ac2.jpg",
-  "https://yanxuan-item.nosdn.127.net/f93243224dc37674dfca5874fe089c60.jpg",
-  "https://yanxuan-item.nosdn.127.net/f881cfe7de9a576aaeea6ee0d1d24823.jpg"
-]
+// const imageList = [
+//   "https://yanxuan-item.nosdn.127.net/d917c92e663c5ed0bb577c7ded73e4ec.png",
+//   "https://yanxuan-item.nosdn.127.net/e801b9572f0b0c02a52952b01adab967.jpg",
+//   "https://yanxuan-item.nosdn.127.net/b52c447ad472d51adbdde1a83f550ac2.jpg",
+//   "https://yanxuan-item.nosdn.127.net/f93243224dc37674dfca5874fe089c60.jpg",
+//   "https://yanxuan-item.nosdn.127.net/f881cfe7de9a576aaeea6ee0d1d24823.jpg"
+// ]
 const activeIndex = ref(0)
 const enterhandler = (i)=>{
      activeIndex.value = i
@@ -25,11 +33,11 @@ const positionY = ref(0)
 // 控制滑块跟随鼠标移动（监听下，y发生变化，一旦变化，left/top）
 const target = ref(null)
 const { elementX,elementY,isOutside  } = useMouseInElement(target)
-watch([elementX,elementY],()=>{
+watch([elementX,elementY,isOutside],()=>{
 
 
-  // 优化代码的区域
-  if(!isOutside){
+  // 优化代码的区域,如果鼠标没有移入道盒子里面,直接不执行后面的逻辑
+  if(!isOutside) return
       // 有效范围内控制滑块距离
     // 横向
     if(elementX.value>100&&elementX.value<300){
@@ -47,7 +55,7 @@ watch([elementX,elementY],()=>{
     // 实现取反并将图片放大效果
     positionX.value =  - left.value * 2
     positionY.value = - top.value *2
-  }
+  
   
 }) 
 </script>
