@@ -8,12 +8,12 @@
       <ul>
         <!-- 多模版渲染 区分登录状态和非登录状态 -->
         <!-- 适配思路: 登录时显示第一块 非登录时显示第二块  是否有token -->
-        <template v-if="true">
+        <template v-if="false">
           <li><a href="javascript:;"><i class=" iconfont icon-user"></i>周杰伦</a></li>
           <li>
             <el-popconfirm  title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消">
               <template #reference>
-                <a href="javascript:;">退出登录</a>
+                <a href="javascript:;" @click="$router.push('/Login')">退出登录</a>
               </template>
             </el-popconfirm>
           </li>
@@ -21,7 +21,7 @@
           <li><a href="javascript:;">会员中心</a></li>
         </template>
         <template v-else>
-          <li><a href="javascript:;" >请先登录</a></li>
+          <li><a href="javascript:;" @click="$router.push('/Login')" >请先登录</a></li>
           <li><a href="javascript:;">帮助中心</a></li>
           <li><a href="javascript:;">关于我们</a></li>
         </template>
