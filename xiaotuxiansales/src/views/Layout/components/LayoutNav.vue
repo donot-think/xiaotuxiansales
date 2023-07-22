@@ -1,7 +1,18 @@
 <script setup>
-
-
-
+import { useUserStore } from '@/stores/user';
+import { InfoFilled } from '@element-plus/icons-vue'
+import { useRouter } from 'vue-router';
+const useStore = useUserStore()
+const router = useRouter()
+ const  confirmEvent = ()=>{
+  // console.log("我要退出了");
+    //  event.$router.push('/Login')
+    // 退出登录业务逻辑视线
+    // 1.token信息的清楚
+    useStore.clearUserInfo();
+    // 2.视线路由的跳转
+    router.push('/login')
+ }
 </script>
 
 <template>
@@ -10,12 +21,18 @@
       <ul>
         <!-- 多模版渲染 区分登录状态和非登录状态 -->
         <!-- 适配思路: 登录时显示第一块 非登录时显示第二块  是否有token -->
-        <template v-if="false">
-          <li><a href="javascript:;"><i class=" iconfont icon-user"></i>周杰伦</a></li>
+        <template v-if="useStore.userInfo.token">
+          <li><a href="javascript:;"><i class=" iconfont icon-user"></i>{{useStore.userInfo.account}}</a></li>
           <li>
-            <el-popconfirm  title="确认退出吗?" confirm-button-text="确认" cancel-button-text="取消">
+            <el-popconfirm    @confirm="confirmEvent"
+                              confirm-button-text="是的"
+                              cancel-button-text="不是"
+                              :icon="InfoFilled"
+                              icon-color="#626AEF"
+                              title="确认退出？"
+                              >
               <template #reference>
-                <a href="javascript:;" @click="$router.push('/Login')">退出登录</a>
+                <a href="javascript:;" >退出登录</a>
               </template>
             </el-popconfirm>
           </li>
