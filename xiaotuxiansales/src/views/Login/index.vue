@@ -45,7 +45,6 @@ const doLogin = ()=>{
       ElMessage('成功登录')
       //登陆成功跳转路由
       router.replace('/')
-      console.log(res);
     }
  
    })  
