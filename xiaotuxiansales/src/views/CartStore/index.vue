@@ -1,19 +1,12 @@
 <script setup>
 import { useCartStore } from '@/stores/cartStore'
+import { selectGroupKey } from 'element-plus';
 const cartStore = useCartStore()
 
-// // 单选回调
-// const singleCheck = (i, selected) => {
-//   console.log(i, selected)
-//   // store cartList 数组 无法知道要修改谁的选中状态？
-//   // 除了selected补充一个用来筛选的参数 - skuId
-//   cartStore.singleCheck(i.skuId, selected)
-// }
-
-
-// const allCheck = (selected) => {
-//   cartStore.allCheck(selected)
-// }
+const singleCheck = (i,selected)=>{
+  console.log(i.selected);
+   cartStore.singleCheck(i.skuId,selected)
+}
 </script>
 
 <template>
@@ -38,7 +31,7 @@ const cartStore = useCartStore()
             <tr v-for="i in cartStore.cartList" :key="i.id">
               <td>
                 <!-- 单选框 -->
-                <el-checkbox :model-value="i.selected" @change="(selected) => singleCheck(i, selected)" />
+                <el-checkbox :model-value="i.selected" @change="((selected)=>singleCheck(i,selected))"/>
               </td>
               <td>
                 <div class="goods">
