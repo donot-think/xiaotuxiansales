@@ -13,7 +13,7 @@ export const useCartStore = defineStore('cart',()=>{
             item.count++
         }else{
            cartList.value.push(goods)
-        }
+        } 
 }
     const delCart = (skuId)=>{
           const idx = cartList.value.findIndex((item)=>skuId===item.skuId)
@@ -24,19 +24,28 @@ export const useCartStore = defineStore('cart',()=>{
     // 购物车中所有商品价格之和
     const allPrice =computed(()=>cartList.value.reduce((a,c)=>a+c.count*c.price,0)) 
   //修改对应的单选框中的值
-  const singleCheck = (skuId,selected)=>{
+   const singleCheck = (skuId,selected)=>{
     //查到到对应skuId的商品
     const item = cartList.value.find((item)=>item.skuId === skuId)
     if(item){
         item.selected = selected
-    }       
-  }
+    }  
+    //定义isAll,将所有的商品中的selected的值获取
+   }
+   const isAll = computed(()=>cartList.value.every((item)=>item.selected))
+   const alCheck = (selected)=>{
+    //   selected = !selected
+      cartList.value.forEach((item)=>item.selected = selected)
+   }
     return{
         cartList,
-        addCart,
-        delCart,
         allCount,
         allPrice,
-        singleCheck
+        isAll,
+        addCart,
+        delCart,
+        singleCheck,
+        alCheck
+        
     }
 })
