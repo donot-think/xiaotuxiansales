@@ -1,17 +1,22 @@
 <script setup>
-import { useUserStore } from '@/stores/user';
+import { useUserStore } from '@/stores/userStore';
 import { InfoFilled } from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router';
+import { useCartStore } from '@/stores/cartStore';
 const useStore = useUserStore()
+const cartStore = useCartStore()
 const router = useRouter()
  const  confirmEvent = ()=>{
   // console.log("我要退出了");
     //  event.$router.push('/Login')
     // 退出登录业务逻辑视线
-    // 1.token信息的清楚
+    // 1.token信息的清除
     useStore.clearUserInfo();
     // 2.视线路由的跳转
     router.push('/login')
+    //清除购物车信息
+    cartStore.clearCartList();
+
  }
 </script>
 

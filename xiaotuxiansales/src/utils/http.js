@@ -1,6 +1,6 @@
 // axios基础的封装
 import axios from 'axios'
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from '@/stores/userStore'
 import router from '@/router'
 const httpInstance = axios.create({
     baseURL:'http://pcapi-xiaotuxian-front-devtest.itheima.net',

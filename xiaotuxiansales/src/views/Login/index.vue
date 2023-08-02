@@ -1,8 +1,9 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import {useUserStore} from '@/stores/user'
-
+import {useUserStore} from '@/stores/userStore'
+import { useCartStore } from '@/stores/cartStore';
+const cartStore = useCartStore()
 const useStore = useUserStore()
 //表单校验
 const form = ref({
@@ -45,6 +46,8 @@ const doLogin = ()=>{
       ElMessage('成功登录')
       //登陆成功跳转路由
       router.replace('/')
+      // //调用获取购物车数据接口
+      // cartStore.update()
     }
  
    })  

@@ -1,16 +1,14 @@
 <script setup>
 import { useCartStore } from '@/stores/cartStore'
-import { selectGroupKey } from 'element-plus';
 const cartStore = useCartStore()
 
 const singleCheck = (i,selected)=>{
-  console.log(i.selected);
    cartStore.singleCheck(i.skuId,selected)
 }
 const allCheck = (selected)=>{
   cartStore.alCheck(selected)
-  console.log(selected);
 }
+
 </script>
 
 <template>
