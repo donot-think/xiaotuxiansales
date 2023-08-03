@@ -12,6 +12,18 @@ const getcheckInfo =async ()=>{
     // console.log(curAddress.value);
 }
 onMounted(()=>getcheckInfo())
+//将当前所选中的用户地址信息存储在激活对象中
+const selectedAddress = (item)=>{
+     activeAddress.value = item
+}
+//将激活的地址动态展示到页面上，同时关闭弹框、将默认值初始化
+const confirm = ()=>{
+  curAddress.value=activeAddress.value
+  dialogVisible.value = false
+  activeAddress.value = {}
+}
+const activeAddress = ref({})
+const dialogVisible = ref(false)
 </script>
 
 <template>
@@ -31,7 +43,7 @@ onMounted(()=>getcheckInfo())
               </ul>
             </div>
             <div class="action">
-              <el-button size="large" @click="toggleFlag = true">切换地址</el-button>
+              <el-button size="large" @click="dialogVisible = true">切换地址</el-button>
               <el-button size="large" @click="addFlag = true">添加地址</el-button>
             </div>
           </div>
@@ -112,6 +124,23 @@ onMounted(()=>getcheckInfo())
     </div>
   </div>
   <!-- 切换地址 -->
+  <el-dialog title="切换收货地址" width="30%" center v-model="dialogVisible">
+  <div class="addressWrapper">
+    <div class="text item" :class="{active:activeAddress.id === item.id}" @click="selectedAddress(item)" v-for="item in checkInfo.userAddresses"  :key="item.id">
+      <ul>
+      <li><span>收<i />货<i />人：</span>{{ item.receiver }} </li>
+      <li><span>联系方式：</span>{{ item.contact }}</li>
+      <li><span>收货地址：</span>{{ item.fullLocation + item.address }}</li>
+      </ul>
+    </div>
+  </div>
+  <template #footer>
+    <span class="dialog-footer">
+      <el-button @click="dialogVisible = false">取消</el-button>
+      <el-button type="primary" @click="confirm">确定</el-button>
+    </span>
+  </template>
+</el-dialog>
   <!-- 添加地址 -->
 </template>
 
