@@ -1,6 +1,11 @@
 <script setup>
 import { getCheckOutAPI } from '@/apis/checkout'
 import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router';
+import { useCartStore } from '@/stores/cartStore';
+import { createPayAPI } from '@/apis/checkout'
+const  cartStore = useCartStore()
+const router = useRouter()
 const checkInfo = ref({})  // 订单对象
 const curAddress = ref({})  // 地址对象
 const getcheckInfo =async ()=>{
@@ -24,6 +29,33 @@ const confirm = ()=>{
 }
 const activeAddress = ref({})
 const dialogVisible = ref(false)
+
+//提交订单操作
+const createPay = async()=>{
+    const res = await  createPayAPI({
+    payType:1,
+    payChannel:1,
+    buyerMessge:'',
+    goods:checkInfo.value.goods.map(item=>{
+      return{
+        skuId:item.skuId,
+        count:item.count
+      }
+    }),
+    addressId:curAddress.value.id
+  })
+  const orderId = res.result.id
+  // console.log(res);
+  //跳转到支付页面
+   router.push({
+    path:'/Pay',
+    query:{
+      id:orderId
+    }
+   })
+   //更新购物车
+   cartStore.update()
+}
 </script>
 
 <template>
@@ -118,7 +150,7 @@ const dialogVisible = ref(false)
         </div>
         <!-- 提交订单 -->
         <div class="submit">
-          <el-button type="primary" size="large" >提交订单</el-button>
+          <el-button type="primary" size="large" @click="createPay" >提交订单</el-button>
         </div>
       </div>
     </div>

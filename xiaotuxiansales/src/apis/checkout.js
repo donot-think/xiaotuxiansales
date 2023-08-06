@@ -7,3 +7,13 @@ export  function getCheckOutAPI(){
         }
     )
 }
+
+export  function createPayAPI(data){ 
+    return request(
+        {
+            url:'/member/order',
+            method:'POST',
+            data
+        }
+    )
+}
