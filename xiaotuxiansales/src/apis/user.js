@@ -24,3 +24,21 @@ export const getLikeListAPI = ({ limit = 4 }) => {
       }
     })
   }
+
+
+  /*
+params: {
+	orderState:0,
+  page:1,
+  pageSize:2
+}
+*/
+
+//我的订单接口
+export const getUserOrder = (params) => {
+    return request({
+      url:'/member/order',
+      method:'GET',
+      params
+    })
+  }
